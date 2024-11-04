@@ -1,8 +1,8 @@
 <div class="container mt-2">
     <div *ngIf="weatherService.currentCity.value">
         <h1>{{weatherService.currentCity.value.name}}</h1>
+        <div>{{getWeatherDescription(weatherService.currentWeather.value.current.weather_code)}}</div>
         <div>{{weatherService.currentWeather.value.current.temperature_2m}} °C</div>
-        <div>{{weatherService.currentWeather.value.current.weather_code}}</div>
         <div>{{weatherService.currentWeather.value.current.relative_humidity_2m}}</div>
         <div>{{weatherService.currentWeather.value.current.wind_speed_10m}} km/h</div>
     </div>
