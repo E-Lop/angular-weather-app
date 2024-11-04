@@ -1,6 +1,12 @@
-<div *ngIf="weatherService.currentCity.value">
-    {{weatherService.currentCity.value}}
-</div>
-<div *ngIf="!weatherService.currentCity.value">
-    Cerca una città per iniziare
+<div class="container mt-2">
+    <div *ngIf="weatherService.currentCity.value">
+        <h1>{{weatherService.currentCity.value.name}}</h1>
+        <div>{{weatherService.currentWeather.value.current.temperature_2m}} °C</div>
+        <div>{{weatherService.currentWeather.value.current.weather_code}}</div>
+        <div>{{weatherService.currentWeather.value.current.relative_humidity_2m}}</div>
+        <div>{{weatherService.currentWeather.value.current.wind_speed_10m}} km/h</div>
+    </div>
+    <div *ngIf="!weatherService.currentCity.value">
+        Cerca una città per iniziare
+    </div>
 </div>

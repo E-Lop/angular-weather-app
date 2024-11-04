@@ -8,16 +8,11 @@ import { WeatherService } from 'src/app/service/weather.service';
 })
 export class WeatherboxComponent implements OnInit {
 
-  currentCity: string | null = null;
-
+  
   constructor(public weatherService: WeatherService) { }
 
-  ngOnInit(): void {
-    this.getCurrentCity();
-  }
+  ngOnInit(): void {}
 
-  getCurrentCity() {
-    this.currentCity = localStorage.getItem('city');
-  }
+  
 
 }

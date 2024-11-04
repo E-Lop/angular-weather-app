@@ -25,7 +25,13 @@ export class NavbarComponent implements OnInit {
       const city = this.citySearchForm.value.city;
       console.log('città cercata:', city);
 
-      this.weatherservice.currentCity.next(city);
+      // this.weatherservice.currentCity.next(city);
+
+      this.weatherservice.getCoordinates(city).subscribe((data: any) => {
+        console.log('coordinate:', data.results[0]);
+        this.weatherservice.currentCity.next(data.results[0]);
+        console.log('città inviata:', this.weatherservice.currentCity.value);
+      });
       
       this.citySearchForm.reset();
     } else {
