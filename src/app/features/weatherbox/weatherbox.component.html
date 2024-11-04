@@ -1,0 +1,6 @@
+<div *ngIf="weatherService.currentCity.value">
+    {{weatherService.currentCity.value}}
+</div>
+<div *ngIf="!weatherService.currentCity.value">
+    Cerca una città per iniziare
+</div>
