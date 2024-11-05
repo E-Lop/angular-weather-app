@@ -1,12 +1,37 @@
 <div class="container mt-2">
     <div *ngIf="weatherService.currentCity.value">
-        <h1>{{weatherService.currentCity.value.name}}</h1>
-        <div>{{getWeatherDescription(weatherService.currentWeather.value.current.weather_code)}}</div>
-        <div>{{weatherService.currentWeather.value.current.temperature_2m}} °C</div>
-        <div>{{weatherService.currentWeather.value.current.relative_humidity_2m}}</div>
-        <div>{{weatherService.currentWeather.value.current.wind_speed_10m}} km/h</div>
+        <div class="top-row d-flex justify-content-around">
+            <div>{{weatherService.currentCity.value.name}}</div>
+            <button type="button" 
+                class="btn btn-success" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="Aggiungi ai preferiti"
+                (click)="addToPreferred(weatherService.currentCity.value)">+</button>
+        </div>
+        <div class="second-line text-center">{{getWeatherDescription(weatherService.currentWeather.value.current.weather_code)}}</div>
+        <div class="third-line d-flex justify-content-around mt-2">
+            <div>{{weatherService.currentWeather.value.current.temperature_2m}} °C</div>
+            <div>{{weatherService.currentWeather.value.current.relative_humidity_2m}} UR</div>
+            <div>{{weatherService.currentWeather.value.current.wind_speed_10m}} km/h</div>
+        </div>
     </div>
-    <div *ngIf="!weatherService.currentCity.value">
+    <div *ngIf="!weatherService.currentCity.value" class="text-center">
         Cerca una città per iniziare
     </div>
-</div>
+
+    <div class="mt-2 text-center">
+        <div>Città preferite</div>
+        <!-- list of preferred cities from preferredCities behaviour subject -->
+        <div *ngFor="let city of weatherService.preferredCities | async" class="d-flex justify-content-around mt-2">
+            <div>{{city.name}}</div>
+            <button type="button" 
+                    class="btn btn-danger" 
+                    data-bs-toggle="tooltip" 
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="Rimuovi dai preferiti"
+                    (click)="removeFromPreferred(city)">-</button>
+        </div>
+    </div>

@@ -1,6 +1,6 @@
 <form [formGroup]="citySearchForm" (ngSubmit)="onSubmit()" class="d-flex align-items-center justify-content-center p-2">
     <div class="me-2">
-        <input type="text" formControlName="city" class="form-control" id="citysearch">
+        <input type="text" formControlName="city" class="form-control" id="citysearch" placeholder="Città">
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="citySearchForm.invalid">Cerca</button>
 </form>

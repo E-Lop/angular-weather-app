@@ -12,6 +12,8 @@ export class WeatherService {
 
   currentWeather = new BehaviorSubject<any | null>(null);
 
+  preferredCities = new BehaviorSubject<any[]>(JSON.parse(localStorage.getItem('preferredCities[_value]') || '[]'));
+
   constructor(public http: HttpClient) { 
     this.currentCity.subscribe(value => {
       if (value) {
@@ -21,6 +23,23 @@ export class WeatherService {
         });
       }
     });
+  }
+
+  // Method to add a city to preferredCities
+  addToPreferred(city: any): void {
+    const currentPreferred = this.preferredCities.value;
+    if (!currentPreferred.some((c: any) => c.id === city.id)) {
+      const updatedPreferred = [...currentPreferred, city];
+      this.preferredCities.next(updatedPreferred);
+      localStorage.setItem('preferredCities', JSON.stringify(updatedPreferred));
+    }
+  }
+
+  // Method to remove a city from preferredCities
+  removeFromPreferred(city: any): void {
+    const updatedPreferred = this.preferredCities.value.filter((c: any) => c.id !== city.id);
+    this.preferredCities.next(updatedPreferred);
+    localStorage.setItem('preferredCities', JSON.stringify(updatedPreferred));
   }
 
   getCoordinates(city: string) {

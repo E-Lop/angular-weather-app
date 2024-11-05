@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { WeatherService } from 'src/app/service/weather.service';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-weatherbox',
   templateUrl: './weatherbox.component.html',
   styleUrls: ['./weatherbox.component.css']
 })
-export class WeatherboxComponent implements OnInit {
+export class WeatherboxComponent implements OnInit, AfterViewInit {
 
   weatherCodeDescriptions: { [key: string]: string } = {
     '0': 'Cielo sereno',
@@ -41,10 +42,30 @@ export class WeatherboxComponent implements OnInit {
   
   constructor(public weatherService: WeatherService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // retrieve preferred cities from local storage and assign to weatherService.preferredCities
+    this.weatherService.preferredCities.next(JSON.parse(localStorage.getItem('preferredCities') || '[]'));
+  }
+
+  ngAfterViewInit(): void {
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList: NodeListOf<Element> = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach((tooltipTriggerEl: Element) => {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  }
 
   getWeatherDescription(code: number): string {
     return this.weatherCodeDescriptions[code] || 'Unknown weather code';
+  }
+
+  // adds city to the list of preferred cities in local storage
+  addToPreferred(city: string) {
+    this.weatherService.addToPreferred(city);
+  }
+
+  removeFromPreferred(city: string) {
+    this.weatherService.removeFromPreferred(city);
   }
 
 }
