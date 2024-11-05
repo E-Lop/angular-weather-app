@@ -7,12 +7,14 @@ import { NavbarComponent } from './core/navbar/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WeatherboxComponent } from './features/weatherbox/weatherbox.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ChartboxComponent } from './core/features/chartbox/chartbox.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    WeatherboxComponent
+    WeatherboxComponent,
+    ChartboxComponent
   ],
   imports: [
     BrowserModule,

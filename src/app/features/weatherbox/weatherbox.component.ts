@@ -57,6 +57,8 @@ export class WeatherboxComponent implements OnInit, AfterViewInit {
     tooltipTriggerList.forEach((tooltipTriggerEl: Element) => {
       new bootstrap.Tooltip(tooltipTriggerEl);
     });
+    console.log('current city', this.weatherService.currentCity.value);
+    
   }
 
   getWeatherDescription(code: number): string {
