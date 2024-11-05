@@ -12,7 +12,7 @@ export class WeatherService {
 
   currentWeather = new BehaviorSubject<any | null>(null);
 
-  preferredCities = new BehaviorSubject<any[]>(JSON.parse(localStorage.getItem('preferredCities[_value]') || '[]'));
+  preferredCities = new BehaviorSubject<string[]>(JSON.parse(localStorage.getItem('preferredCities') || '[]'));
 
   constructor(public http: HttpClient) { 
     this.currentCity.subscribe(value => {
@@ -27,8 +27,10 @@ export class WeatherService {
 
   // Method to add a city to preferredCities
   addToPreferred(city: any): void {
+    console.log('passing city:', city);
+    
     const currentPreferred = this.preferredCities.value;
-    if (!currentPreferred.some((c: any) => c.id === city.id)) {
+    if (!currentPreferred.some((c: any) => c.city.id === city.city.id)) {
       const updatedPreferred = [...currentPreferred, city];
       this.preferredCities.next(updatedPreferred);
       localStorage.setItem('preferredCities', JSON.stringify(updatedPreferred));
@@ -37,7 +39,8 @@ export class WeatherService {
 
   // Method to remove a city from preferredCities
   removeFromPreferred(city: any): void {
-    const updatedPreferred = this.preferredCities.value.filter((c: any) => c.id !== city.id);
+    const currentPreferred = this.preferredCities.value;
+    const updatedPreferred = currentPreferred.filter((c: any) => c.city.id !== city.city.id);
     this.preferredCities.next(updatedPreferred);
     localStorage.setItem('preferredCities', JSON.stringify(updatedPreferred));
   }

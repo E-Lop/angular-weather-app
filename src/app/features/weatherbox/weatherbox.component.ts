@@ -60,8 +60,8 @@ export class WeatherboxComponent implements OnInit, AfterViewInit {
   }
 
   // adds city to the list of preferred cities in local storage
-  addToPreferred(city: string) {
-    this.weatherService.addToPreferred(city);
+  addToPreferred(data: { city: any, weather: any }) {
+    this.weatherService.addToPreferred(data);
   }
 
   removeFromPreferred(city: string) {
