@@ -3,12 +3,20 @@
   font-weight: bold;
 }
 
+.w-limit {
+    max-width: 360px;
+}
+
 .city-element {
     border: 1px solid black;
-    width: 80%;
     justify-self: center;
+    border-radius: 25px;
 }
 
 .city-element button {
     margin-block: 2px;
+}
+
+.c-name {
+    font-weight: bold;
 }

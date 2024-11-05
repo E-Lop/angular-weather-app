@@ -8,6 +8,8 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./weatherbox.component.css']
 })
 export class WeatherboxComponent implements OnInit, AfterViewInit {
+  sortMode: 'name' | 'temperature' = 'name';
+  sortedPreferredCities: any[] = [];
 
   weatherCodeDescriptions: { [key: string]: string } = {
     '0': 'Cielo sereno',
@@ -43,8 +45,10 @@ export class WeatherboxComponent implements OnInit, AfterViewInit {
   constructor(public weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    // retrieve preferred cities from local storage and assign to weatherService.preferredCities
     this.weatherService.preferredCities.next(JSON.parse(localStorage.getItem('preferredCities') || '[]'));
+    this.weatherService.preferredCities.subscribe(cities => {
+      this.sortPreferredCities(cities);
+    });
   }
 
   ngAfterViewInit(): void {
@@ -66,6 +70,19 @@ export class WeatherboxComponent implements OnInit, AfterViewInit {
 
   removeFromPreferred(city: string) {
     this.weatherService.removeFromPreferred(city);
+  }
+
+  toggleSortMode(): void {
+    this.sortMode = this.sortMode === 'name' ? 'temperature' : 'name';
+    this.sortPreferredCities(this.weatherService.preferredCities.value);
+  }
+
+  sortPreferredCities(cities: any[]): void {
+    if (this.sortMode === 'name') {
+      this.sortedPreferredCities = cities.sort((a, b) => a.city.name.localeCompare(b.city.name));
+    } else {
+      this.sortedPreferredCities = cities.sort((a, b) => b.weather.temperature_2m - a.weather.temperature_2m);
+    }
   }
 
 }
