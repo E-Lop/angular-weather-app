@@ -16,8 +16,8 @@ export class ChartboxComponent implements OnInit, AfterViewInit {
     // Initialize weatherData with a sample structure
     this.weatherData = {
       hourly: {
-        time: [], // Initialize as empty array
-        temperature2m: [] // Initialize as empty array
+        time: [],
+        temperature2m: []
       }
     };
 

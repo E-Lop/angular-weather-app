@@ -1,13 +1,12 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WeatherService } from 'src/app/service/weather.service';
-import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-weatherbox',
   templateUrl: './weatherbox.component.html',
   styleUrls: ['./weatherbox.component.css']
 })
-export class WeatherboxComponent implements OnInit, AfterViewInit {
+export class WeatherboxComponent implements OnInit {
   sortMode: 'name' | 'temperature' = 'name';
   sortedPreferredCities: any[] = [];
 
@@ -51,21 +50,10 @@ export class WeatherboxComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    // Initialize Bootstrap tooltips
-    const tooltipTriggerList: NodeListOf<Element> = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    tooltipTriggerList.forEach((tooltipTriggerEl: Element) => {
-      new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-    console.log('current city', this.weatherService.currentCity.value);
-    
-  }
-
   getWeatherDescription(code: number): string {
     return this.weatherCodeDescriptions[code] || 'Unknown weather code';
   }
 
-  // adds city to the list of preferred cities in local storage
   addToPreferred(data: { city: any, weather: any }) {
     this.weatherService.addToPreferred(data);
   }

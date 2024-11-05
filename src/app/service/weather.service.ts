@@ -18,7 +18,6 @@ export class WeatherService {
     this.currentCity.subscribe(value => {
       if (value) {
         this.getWeather(value.latitude, value.longitude).subscribe((data: any) => {
-          console.log('meteo:', data);
           this.currentWeather.next(data);
         });
       }
@@ -27,8 +26,6 @@ export class WeatherService {
 
   // Method to add a city to preferredCities
   addToPreferred(city: any): void {
-    console.log('passing city:', city);
-    
     const currentPreferred = this.preferredCities.value;
     if (!currentPreferred.some((c: any) => c.city.id === city.city.id)) {
       const updatedPreferred = [...currentPreferred, city];
